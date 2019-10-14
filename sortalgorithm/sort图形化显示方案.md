@@ -266,3 +266,73 @@ for cnt in range(10):
 plt.show()
 ```
 
+最后完成了一个单个冒泡还不错的效果，实现代码如下：
+
+```python
+#!/usr/bin/python3
+# 文件名: sort.py
+# -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
+from random import randrange, shuffle
+
+
+if __name__ == '__main__':
+
+    array = []
+
+    # 范围内随机取12个数值
+    while len(array) < 20:
+        array.append(randrange(5, 50, 5))
+
+    # 打乱数组
+    shuffle(array)
+
+    sortbar = plt.bar(range(len(array)), array, alpha=0.5, width=0.3, color='red', edgecolor='deepskyblue', tick_label=array, lw=3)
+
+    print('排序前数组：{}'.format(array))
+
+
+
+    # 遍历所有数组元素
+    for i in range(len(array)-1):
+
+        print("from 0 to ", len(array) - i - 1)
+
+        swapped = False
+
+        # last i elements are already in place
+        for j in range(len(array) - i - 1):
+
+            sortbar[j].set_fc("deepskyblue")
+            sortbar[j + 1].set_fc("deepskyblue")
+
+            if (array[j] > array[j+1]) :
+                swapped = True
+                array[j], array[j+1] = array[j+1], array[j]
+
+                tempheight = sortbar[j].get_height()
+                sortbar[j].set_height(sortbar[j + 1].get_height())
+
+                sortbar[j + 1].set_height(tempheight)
+
+            plt.pause(0.01)
+
+            sortbar[j].set_fc("red")
+            sortbar[j+1].set_fc("black")
+
+        if not swapped:
+            break
+
+        plt.pause(0.5)
+
+    if swapped:
+        sortbar[0].set_fc("black")
+
+    plt.pause(0.1)
+
+    print('排序后数组：{}'.format(array))
+
+    # 结束
+    plt.show()
+```
+
